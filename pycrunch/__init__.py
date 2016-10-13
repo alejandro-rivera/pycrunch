@@ -181,7 +181,9 @@ You typically add new resources to a Catalog via its `create` method:
 
 from six.moves import urllib
 
+from pycrunch import csvlib
 from pycrunch import cubes
+from pycrunch import datasets
 from pycrunch import elements
 from pycrunch import shoji
 from pycrunch.shoji import TaskError, TaskProgressTimeoutError
@@ -200,7 +202,9 @@ __all__ = [
     'ClientError', 'ServerError', 'CrunchError'
     'Session',
     'urljoin',
-    'connect', 'connect_with_token'
+    'connect', 'connect_with_token',
+    'csvlib',
+    'datasets'
 ]
 
 

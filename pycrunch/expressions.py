@@ -49,10 +49,23 @@ NOT_IN = object()
 
 def parse_expr(expr):
 
+    crunch_func_map = {
+        'valid': 'is_valid',
+        'missing': 'is_missing'
+    }
+
+    crunch_method_map = {
+        'has_any': 'any',
+        'has_all': 'all',
+        'duplicates': 'duplicates',
+        'has_count': 'has_count'
+    }
+
     def _parse(node, parent=None):
         obj = {}
         args = []
         op = None
+        func_type = None
 
         if isinstance(node, ast.AST):
             # Get the current node fields.
@@ -61,6 +74,12 @@ def parse_expr(expr):
             # "Terminal" nodes. Recursion ends with these guys.
             if isinstance(node, ast.Name):
                 _id = fields[0][1]
+
+                # A function identifier.
+                if getattr(node, '_func_type', None) == 'function':
+                    return _id
+
+                # A variable identifier.
                 return {
                     'variable': _id
                 }
@@ -85,7 +104,7 @@ def parse_expr(expr):
                 return 'in'
             elif isinstance(node, ast.NotIn):
                 return NOT_IN
-            elif isinstance(node, ast.List):
+            elif isinstance(node, ast.List) or isinstance(node, ast.Tuple):
                 _list = fields[0][1]
                 if not (all(isinstance(el, ast.Str) for el in _list) or
                         all(isinstance(el, ast.Num) for el in _list)):
@@ -107,11 +126,6 @@ def parse_expr(expr):
                 _id = _parse(_id_node, parent=node)
 
                 # The 'method'.
-                crunch_method_map = {
-                    'has_any': 'any',
-                    'has_all': 'all',
-                    'duplicates': 'duplicates'
-                }
                 method = fields[1][1]
                 if method not in crunch_method_map.keys():
                     raise ValueError
@@ -138,34 +152,56 @@ def parse_expr(expr):
                         left = _parse(_val, parent=node)
                         args.append(left)
                     elif _name == 'func' and isinstance(_val, ast.Attribute):
+                        # Method-like call. Example:
+                        #       variable.has_any([1,2])
+                        func_type = 'method'
+                        setattr(_val, '_func_type', func_type)
                         left, op = _parse(_val, parent=node)
                         args.append(left)
+                    elif _name == 'func' and isinstance(_val, ast.Name):
+                        # Function call. Example:
+                        #       valid(birthyear, birthmonth)
+                        func_type = 'function'
+                        setattr(_val, '_func_type', func_type)
+                        _id = _parse(_val, parent=node)
+                        if _id not in crunch_func_map.keys():
+                            raise ValueError
+                        op = crunch_func_map[_id]
                     elif _name == 'ops':
                         if len(_val) != 1:
                             raise ValueError
                         op = _parse(_val[0], parent=node)
                     elif _name == 'comparators' or _name == 'args':  # right
-                        if len(_val) > 1:
-                            raise ValueError
-                        elif len(_val) == 0:
+                        if len(_val) == 0:
                             continue
 
-                        if op == 'duplicates':
-                            # No parameters allowed for the 'duplicates' method.
-                            raise ValueError
-
-                        right = _parse(_val[0], parent=node)
-
-                        # For method calls, we only allow list-of-int
-                        # parameters.
-                        if _name == 'args':
-                            if 'value' not in right \
-                                    or not isinstance(right['value'], list):
+                        if func_type == 'method':
+                            if len(_val) > 1:
                                 raise ValueError
 
-                        args.append(right)
+                            if op == 'duplicates':
+                                # No parameters allowed for 'duplicates'.
+                                raise ValueError
+
+                        for arg in _val:
+                            right = _parse(arg, parent=node)
+
+                            # For method calls, we only allow list-of-int
+                            # parameters.
+                            if _name == 'args' and func_type == 'method' \
+                                    and op != 'has_count':
+                                if 'value' not in right \
+                                        or not isinstance(right['value'], list):
+                                    raise ValueError
+
+                            args.append(right)
+
+                        if op == 'has_count':
+                            if not isinstance(args[-1].get('value'), int):
+                                raise ValueError
+
                     elif _name in ('keywords', 'starargs', 'kwargs') and _val:
-                        # We don't support these in method calls.
+                        # We don't support these in function/method calls.
                         raise ValueError
                     elif _name == 'operand' and isinstance(node, ast.UnaryOp):
                         right = _parse(_val, parent=node)
@@ -186,6 +222,12 @@ def parse_expr(expr):
                                 }
                             ]
                         }
+                    elif op in crunch_func_map.values() \
+                            and isinstance(args, list) and len(args) > 1:
+                        obj = {
+                            'function': 'and',
+                            'args': []
+                        }
                     else:
                         obj = {
                             'function': op,
@@ -196,6 +238,15 @@ def parse_expr(expr):
                     if op is NOT_IN:
                         # Special treatment for the args in a `not in` expr.
                         obj['args'][0]['args'] = args
+                    elif op in crunch_func_map.values() \
+                            and isinstance(args, list) and len(args) > 1:
+                        for arg in args:
+                            obj['args'].append(
+                                {
+                                    'function': op,
+                                    'args': [arg]
+                                }
+                            )
                     else:
                         obj['args'] = args
 
@@ -214,19 +265,105 @@ def process_expr(obj, ds):
     (or a list of new expression objects) with all variable aliases
     transformed into variable URLs, just as the crunch API needs them to be.
     """
+    base_url = ds.self
+    variables = ds.variables.by('alias')
 
     def _process(obj, variables):
+        op = None
+        arrays = []
+        values = []
+        subvariables = []
+
         for key, val in obj.items():
             if isinstance(val, dict):
-                _process(val, variables)
+                obj[key] = _process(val, variables)
             elif isinstance(val, list) or isinstance(val, tuple):
+                subitems = []
                 for subitem in val:
-                    _process(subitem, variables)
+                    if isinstance(subitem, dict):
+                        subitem = _process(subitem, variables)
+                        if 'subvariables' in subitem:
+                            arrays.append(subitem.pop('subvariables'))
+                        elif 'value' in subitem:
+                            values.append(subitem)
+                    subitems.append(subitem)
+                obj[key] = subitems
             elif key == 'variable':
-                obj[key] = variables[val].entity.self
-        return obj
+                var = variables.get(val)
+                if var:
+                    obj[key] = '%svariables/%s/' % (base_url, var['id'])
 
-    variables = ds.variables.by('alias')
+                    if var['type'] in ('categorical_array', 'multiple_response'):
+                        subvariables = var.get('subvariables', [])
+                else:
+                    raise ValueError("Invalid variable alias '%s" % val)
+            elif key == 'function':
+                op = val
+
+        if subvariables:
+            obj['subvariables'] = subvariables
+
+        if arrays and op in ('any', 'all', 'is_valid', 'is_missing'):
+            # Support for array variables.
+
+            if len(arrays) != 1:
+                raise ValueError
+
+            real_op = 'in'
+            expansion_op = 'or'
+            if op == 'all':
+                real_op = '=='
+                expansion_op = 'and'
+            elif op == 'is_valid':
+                real_op = 'all_valid'
+            elif op == 'is_missing':
+                real_op = 'all_missing'
+
+            if op in ('is_valid', 'is_missing'):
+                if len(values) != 0:
+                    raise ValueError
+
+                # Just swap the op. Yep, that's it.
+                obj['function'] = real_op
+            else:
+                if len(values) != 1:
+                    raise ValueError
+
+                subvariables = arrays[0]
+                value = values[0]
+
+                if op == 'all':
+                    if len(value['value']) != 1:
+                        raise ValueError
+                    value['value'] = value['value'][0]
+
+                if len(subvariables) == 1:
+                    obj['function'] = real_op
+                    obj['args'][0] = {'variable': subvariables[0]}
+                    obj['args'][1] = value
+                else:
+                    obj = {
+                        'function': expansion_op,
+                        'args': []
+                    }
+                    args_ref = obj['args']
+                    for i, subvar in enumerate(subvariables):
+                        args_ref.append(
+                            {
+                                'function': real_op,
+                                'args': [
+                                    {'variable': subvar},
+                                    value
+                                ]
+                            }
+                        )
+                        if i < len(subvariables) - 2:
+                            args_ref.append(
+                                {'function': expansion_op, 'args': []}
+                            )
+                            args_ref = args_ref[-1]['args']
+
+        return obj
 
     if isinstance(obj, list):
         return [

@@ -38,14 +38,14 @@ def aliases_to_urls(ds, variable, response_map):
     :param response_map: mapping of new subvariables
     :return:
     """
-    suvars = ds.variables.by('name')[variable].entity.subvariables.by('name')
+    suvars = ds.variables.by('alias')[variable].entity.subvariables.by('alias')
     mapped_urls = {}
     for key, values in response_map.items():
         try:
             mapped_urls[key] = [suvars[x].entity.self for x in values]
         except KeyError:
             raise KeyError(
-                "Unexistant variables %s in Dataset %s" % (values, ds['body']['name']))
+                "Unexistant variables %s in Dataset %s" % (values, ds['body']['alias']))
     return mapped_urls
 
 
@@ -83,7 +83,7 @@ def validate_response_map(map):
     return rebuilt
 
 
-def combine_categories(ds, from_alias, category_map, name, alias, description=''):
+def combine_categories(dataset, from_alias, category_map, name, alias, description=''):
     """
     Create a new variable in the given dataset that is a recode
     of an existing variable
@@ -95,14 +95,14 @@ def combine_categories(ds, from_alias, category_map, name, alias, description=''
             "ids": [1,2]
         },
     }
-    :param ds: pycrunch session dataset
+    :param dataset: pycrunch session dataset
     :param from_alias: alias of the variable to recode
     :param name: name for the new variable
     :param alias: alias for the new variable
     :param description: description for the new variable
     :return: the new created variable
     """
-    variable_url = var_name_to_url(ds, from_alias)
+    variable_url = var_name_to_url(dataset, from_alias)
     categories = validate_category_map(category_map)
     payload = SKELETON.copy()
     payload['body']['name'] = name
@@ -117,10 +117,10 @@ def combine_categories(ds, from_alias, category_map, name, alias, description=''
             "value": categories
         }
     ]
-    return ds.variables.create(payload)
+    return dataset.variables.create(payload)
 
 
-def combine_responses(ds, from_alias, response_map, name, alias, description=''):
+def combine_responses(dataset, from_alias, response_map, name, alias, description=''):
     """
     Creates a new variable in the given dataset that combines existing responses
     into new categorized ones
@@ -130,8 +130,8 @@ def combine_responses(ds, from_alias, response_map, name, alias, description='')
     }
     :return: newly created variable
     """
-    variable_url = var_name_to_url(ds, from_alias)
-    trans_responses = aliases_to_urls(ds, from_alias, response_map)
+    variable_url = var_name_to_url(dataset, from_alias)
+    trans_responses = aliases_to_urls(dataset, from_alias, response_map)
     responses = validate_response_map(trans_responses)
     payload = SKELETON.copy()
     payload['body']['name'] = name
@@ -146,5 +146,5 @@ def combine_responses(ds, from_alias, response_map, name, alias, description='')
             "value": responses
         }
     ]
-    return ds.variables.create(payload)
+    return dataset.variables.create(payload)
 
