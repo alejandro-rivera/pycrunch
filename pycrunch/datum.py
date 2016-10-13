@@ -255,62 +255,62 @@ else:
 # """
 
 
-big_ass_formula = """
-if pdl.race == 3 and pdl.e14_presvote12 == 1 and pdl.age >= 18 and pdl.age <= 34: polistrata_hisp = 1
-if pdl.race == 3 and pdl.e14_presvote12 == 1  and pdl.age >=35: polistrata_hisp = 2
-if pdl.race == 3 and  pdl.e14_presvote12 in [3,4] and pdl.age >= 18 and pdl.age <= 34: polistrata_hisp = 3
-if pdl.race == 3 and pdl.e14_presvote12 in [3,4] and pdl.age >=35: polistrata_hisp = 4
-if pdl.race == 3 and pdl.e14_presvote12 == 2 and pdl.age >= 18 and pdl.age <= 34: polistrata_hisp = 5
-if pdl.race == 3 and pdl.e14_presvote12 == 2 and pdl.age >=35: polistrata_hisp = 6
-elif pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  7
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  8
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  9
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  10
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  11
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  12
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  13
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  14
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  15
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  16
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  17
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  18
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >=65 and pdl.educ in [1,2,3,4]: polistrata_hisp =  19
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >=65  and pdl.educ in [5,6]: polistrata_hisp =  20
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  21
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  22
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  23
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 ==  [3,4] and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  24
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 ==  [3,4] and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  25
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  26
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  27
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  28
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  29
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  30
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  31
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  32
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  33
-elif pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  34
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >=65 and pdl.educ in [1,2,3,4]: polistrata_hisp =  35
-elif pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >=65  and pdl.educ in [5,6]: polistrata_hisp =  36
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  37
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  38
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  39
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 ==  2 and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  40
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 ==  2 and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  41
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  42
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  43
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  44
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  45
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  46
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  47
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  48
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  49
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  50
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >=65 and pdl.educ in [1,2,3,4]: polistrata_hisp =  51
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >=65  and pdl.educ in [5,6]: polistrata_hisp =  52
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >=65 and pdl.educ in [1,2,3,4]: polistrata_hisp =  53
-if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >=65 and pdl.educ in [5,6]: polistrata_hisp =  54
-"""
+# big_ass_formula = """
+# if pdl.race == 3 and pdl.e14_presvote12 == 1 and pdl.age >= 18 and pdl.age <= 34: polistrata_hisp = 1
+# if pdl.race == 3 and pdl.e14_presvote12 == 1  and pdl.age >=35: polistrata_hisp = 2
+# if pdl.race == 3 and  pdl.e14_presvote12 in [3,4] and pdl.age >= 18 and pdl.age <= 34: polistrata_hisp = 3
+# if pdl.race == 3 and pdl.e14_presvote12 in [3,4] and pdl.age >=35: polistrata_hisp = 4
+# if pdl.race == 3 and pdl.e14_presvote12 == 2 and pdl.age >= 18 and pdl.age <= 34: polistrata_hisp = 5
+# if pdl.race == 3 and pdl.e14_presvote12 == 2 and pdl.age >=35: polistrata_hisp = 6
+# elif pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  7
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  8
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  9
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  10
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  11
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  12
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  13
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  14
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  15
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  16
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  17
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  18
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >=65 and pdl.educ in [1,2,3,4]: polistrata_hisp =  19
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 2 and pdl.age >=65  and pdl.educ in [5,6]: polistrata_hisp =  20
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  21
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 1 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  22
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  23
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 ==  [3,4] and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  24
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 ==  [3,4] and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  25
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  26
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  27
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  28
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  29
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  30
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  31
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  32
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  33
+# elif pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  34
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >=65 and pdl.educ in [1,2,3,4]: polistrata_hisp =  35
+# elif pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 2 and pdl.age >=65  and pdl.educ in [5,6]: polistrata_hisp =  36
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  37
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == [3,4] and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  38
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  39
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 ==  2 and pdl.gender == 2 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  40
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 ==  2 and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [1,2,3,4]: polistrata_hisp =  41
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >= 18 and pdl.age <30 and pdl.educ in [5,6]: polistrata_hisp =  42
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  43
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  44
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [1,2,3,4]: polistrata_hisp =  45
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >= 30 and pdl.age <= 44 and pdl.educ in [5,6]: polistrata_hisp =  46
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  47
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  48
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [1,2,3,4]: polistrata_hisp =  49
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >= 45 and pdl.age <= 64 and pdl.educ in [5,6]: polistrata_hisp =  50
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >=65 and pdl.educ in [1,2,3,4]: polistrata_hisp =  51
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 2 and pdl.age >=65  and pdl.educ in [5,6]: polistrata_hisp =  52
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >=65 and pdl.educ in [1,2,3,4]: polistrata_hisp =  53
+# if pdl.race in [1,2,4,5,6,7,8] and pdl.e14_presvote12 == 2 and pdl.gender == 1 and pdl.age >=65 and pdl.educ in [5,6]: polistrata_hisp =  54
+# """
 
 
 if __name__ == '__main__':
